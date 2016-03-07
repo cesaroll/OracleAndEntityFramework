@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SKIModel.Store" Alias="Self" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="12.1" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
+        <EntityContainer Name="SKIModelStoreContainer">
+            <EntitySet Name="Events" EntityType="SKIModel.Store.Events" store:Type="Tables" Schema="SKI" />
+            <EntitySet Name="Races" EntityType="SKIModel.Store.Races" store:Type="Tables" Schema="SKI" />
+            <EntitySet Name="Teams" EntityType="SKIModel.Store.Teams" store:Type="Tables" Schema="SKI" />
+            <EntitySet Name="Teams_Mushing" EntityType="SKIModel.Store.Teams_Mushing" store:Type="Tables" Schema="SKI" />
+            <EntitySet Name="Teams_Skijoring" EntityType="SKIModel.Store.Teams_Skijoring" store:Type="Tables" Schema="SKI" />
+            <AssociationSet Name="EventRace" Association="SKIModel.Store.EventRace">
+                <End Role="Event" EntitySet="Events" />
+                <End Role="Race" EntitySet="Races" />
+            </AssociationSet>
+            <AssociationSet Name="RaceTeam" Association="SKIModel.Store.RaceTeam">
+                <End Role="Race" EntitySet="Races" />
+                <End Role="Team" EntitySet="Teams" />
+            </AssociationSet>
+            <AssociationSet Name="FK_Mushing_inherits_Team" Association="SKIModel.Store.FK_Mushing_inherits_Team">
+                <End Role="Team" EntitySet="Teams" />
+                <End Role="Mushing" EntitySet="Teams_Mushing" />
+            </AssociationSet>
+            <AssociationSet Name="FK_Skijoring_inherits_Team" Association="SKIModel.Store.FK_Skijoring_inherits_Team">
+                <End Role="Team" EntitySet="Teams" />
+                <End Role="Skijoring" EntitySet="Teams_Skijoring" />
+            </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Events">
+            <Key>
+                <PropertyRef Name="EventId" />
+            </Key>
+            <Property Name="EventId" Type="number" Nullable="false" Precision="10" StoreGeneratedPattern="Identity" />
+            <Property Name="Name" Type="nvarchar2" Nullable="false" MaxLength="75" />
+            <Property Name="EventDate" Type="date" Nullable="false" />
+            <Property Name="Sponsor" Type="nvarchar2" Nullable="true" MaxLength="50" />
+            <Property Name="Location" Type="nvarchar2" Nullable="true" DefaultValue="Musher's Hall" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Races">
+            <Key>
+                <PropertyRef Name="RaceId" />
+            </Key>
+            <Property Name="RaceId" Type="number" Nullable="false" Precision="10" StoreGeneratedPattern="Identity" />
+            <Property Name="Distance" Type="number" Nullable="false" Precision="38" />
+            <Property Name="DogCount" Type="number" Nullable="false" Precision="10" />
+            <Property Name="Trail" Type="nvarchar2" Nullable="false" MaxLength="200" />
+            <Property Name="EventEventId" Type="number" Nullable="false" Precision="10" />
+        </EntityType>
+        <EntityType Name="Teams">
+            <Key>
+                <PropertyRef Name="TeamId" />
+            </Key>
+            <Property Name="TeamId" Type="number" Nullable="false" Precision="10" StoreGeneratedPattern="Identity" />
+            <Property Name="FirstName" Type="nvarchar2" Nullable="false" MaxLength="50" />
+            <Property Name="LastName" Type="nvarchar2" Nullable="false" MaxLength="50" />
+            <Property Name="City" Type="nchar" Nullable="false" MaxLength="30" />
+            <Property Name="Country" Type="nchar" Nullable="false" MaxLength="30" />
+            <Property Name="DougCount" Type="number" Nullable="false" Precision="10" />
+            <Property Name="RaceRaceId" Type="number" Nullable="false" Precision="10" />
+        </EntityType>
+        <EntityType Name="Teams_Mushing">
+            <Key>
+                <PropertyRef Name="TeamId" />
+            </Key>
+            <Property Name="Leader1" Type="nvarchar2" Nullable="false" MaxLength="20" />
+            <Property Name="Leader2" Type="nvarchar2" Nullable="false" MaxLength="20" />
+            <Property Name="TeamId" Type="number" Nullable="false" Precision="10" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Teams_Skijoring">
+            <Key>
+                <PropertyRef Name="TeamId" />
+            </Key>
+            <Property Name="Dog1" Type="nvarchar2" Nullable="false" MaxLength="20" />
+            <Property Name="Dog2" Type="nvarchar2" Nullable="false" MaxLength="20" />
+            <Property Name="Dog3" Type="nvarchar2" Nullable="false" MaxLength="20" />
+            <Property Name="NumberOfLeaders" Type="number" Nullable="false" Precision="10" />
+            <Property Name="TeamId" Type="number" Nullable="false" Precision="10" StoreGeneratedPattern="Identity" />
+        </EntityType>
+    <Association Name="EventRace">
+        <End Role="Event" Type="SKIModel.Store.Events" Multiplicity="1">
+        </End>
+        <End Role="Race" Type="SKIModel.Store.Races" Multiplicity="*">
+        </End>
+        <ReferentialConstraint>
+            <Principal Role="Event">
+                <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="Race">
+                <PropertyRef Name="EventEventId" />
+            </Dependent>
+        </ReferentialConstraint>
+    </Association>
+    <Association Name="RaceTeam">
+        <End Role="Race" Type="SKIModel.Store.Races" Multiplicity="1">
+        </End>
+        <End Role="Team" Type="SKIModel.Store.Teams" Multiplicity="*">
+        </End>
+        <ReferentialConstraint>
+            <Principal Role="Race">
+                <PropertyRef Name="RaceId" />
+            </Principal>
+            <Dependent Role="Team">
+                <PropertyRef Name="RaceRaceId" />
+            </Dependent>
+        </ReferentialConstraint>
+    </Association>
+        <Association Name="FK_Mushing_inherits_Team">
+            <End Role="Team" Type="SKIModel.Store.Teams" Multiplicity="1" />
+            <End Role="Mushing" Type="SKIModel.Store.Teams_Mushing" Multiplicity="0..1" />
+            <ReferentialConstraint>
+                <Principal Role="Team">
+                    <PropertyRef Name="TeamId" />
+                </Principal>
+                <Dependent Role="Mushing">
+                    <PropertyRef Name="TeamId" />
+                </Dependent>
+            </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Skijoring_inherits_Team">
+            <End Role="Team" Type="SKIModel.Store.Teams" Multiplicity="1" />
+            <End Role="Skijoring" Type="SKIModel.Store.Teams_Skijoring" Multiplicity="0..1" />
+            <ReferentialConstraint>
+                <Principal Role="Team">
+                    <PropertyRef Name="TeamId" />
+                </Principal>
+                <Dependent Role="Skijoring">
+                    <PropertyRef Name="TeamId" />
+                </Dependent>
+            </ReferentialConstraint>
+        </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="SKIModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="SKIModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Events" EntityType="SKIModel.Event" />
+          <EntitySet Name="Races" EntityType="SKIModel.Race" />
+          <EntitySet Name="Teams" EntityType="SKIModel.Team" />
+          <AssociationSet Name="EventRace" Association="SKIModel.EventRace">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Race" EntitySet="Races" />
+          </AssociationSet>
+          <AssociationSet Name="RaceTeam" Association="SKIModel.RaceTeam">
+            <End Role="Race" EntitySet="Races" />
+            <End Role="Team" EntitySet="Teams" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="75" />
+          <Property Name="EventDate" Type="DateTime" Nullable="false" />
+          <Property Name="Sponsor" Type="String" Nullable="true" MaxLength="50" />
+          <Property Name="Location" Type="String" Nullable="true" DefaultValue="Musher's Hall" MaxLength="50" />
+          <NavigationProperty Name="Races" Relationship="SKIModel.EventRace" FromRole="Event" ToRole="Race" />
+        </EntityType>
+        <EntityType Name="Race">
+          <Key>
+            <PropertyRef Name="RaceId" />
+          </Key>
+          <Property Name="RaceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Distance" Type="Decimal" Nullable="false" />
+          <Property Name="DogCount" Type="Int32" Nullable="false" />
+          <Property Name="Trail" Type="String" Nullable="false" MaxLength="200" />
+          <NavigationProperty Name="Event" Relationship="SKIModel.EventRace" FromRole="Race" ToRole="Event" />
+          <Property Name="EventEventId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Teams" Relationship="SKIModel.RaceTeam" FromRole="Race" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="TeamId" />
+          </Key>
+          <Property Name="TeamId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="30" FixedLength="true" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="30" FixedLength="true" />
+          <Property Name="DougCount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Race" Relationship="SKIModel.RaceTeam" FromRole="Team" ToRole="Race" />
+          <Property Name="RaceRaceId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mushing" BaseType="SKIModel.Team" >
+          <Property Name="Leader1" Type="String" Nullable="false" MaxLength="20" />
+          <Property Name="Leader2" Type="String" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Skijoring" BaseType="SKIModel.Team" >
+          <Property Name="Dog1" Type="String" Nullable="false" MaxLength="20" />
+          <Property Name="Dog2" Type="String" Nullable="false" MaxLength="20" />
+          <Property Name="Dog3" Type="String" Nullable="false" MaxLength="20" />
+          <Property Name="NumberOfLeaders" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="EventRace">
+          <End Type="SKIModel.Event" Role="Event" Multiplicity="1" />
+          <End Type="SKIModel.Race" Role="Race" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="Race">
+              <PropertyRef Name="EventEventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RaceTeam">
+          <End Type="SKIModel.Race" Role="Race" Multiplicity="1" />
+          <End Type="SKIModel.Team" Role="Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Race">
+              <PropertyRef Name="RaceId" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="RaceRaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+    <EntityContainerMapping StorageEntityContainer="SKIModelStoreContainer" CdmEntityContainer="SKIModelContainer">
+        <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="IsTypeOf(SKIModel.Event)">
+                <MappingFragment StoreEntitySet="Events">
+                    <ScalarProperty Name="EventId" ColumnName="EventId" />
+                    <ScalarProperty Name="Name" ColumnName="Name" />
+                    <ScalarProperty Name="EventDate" ColumnName="EventDate" />
+                    <ScalarProperty Name="Sponsor" ColumnName="Sponsor" />
+                    <ScalarProperty Name="Location" ColumnName="Location" />
+                </MappingFragment>
+            </EntityTypeMapping>
+        </EntitySetMapping>
+        <EntitySetMapping Name="Races">
+            <EntityTypeMapping TypeName="IsTypeOf(SKIModel.Race)">
+                <MappingFragment StoreEntitySet="Races">
+                    <ScalarProperty Name="RaceId" ColumnName="RaceId" />
+                    <ScalarProperty Name="Distance" ColumnName="Distance" />
+                    <ScalarProperty Name="DogCount" ColumnName="DogCount" />
+                    <ScalarProperty Name="Trail" ColumnName="Trail" />
+                    <ScalarProperty Name="EventEventId" ColumnName="EventEventId" />
+                </MappingFragment>
+            </EntityTypeMapping>
+        </EntitySetMapping>
+        <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="IsTypeOf(SKIModel.Team)">
+                <MappingFragment StoreEntitySet="Teams">
+                    <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                    <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                    <ScalarProperty Name="LastName" ColumnName="LastName" />
+                    <ScalarProperty Name="City" ColumnName="City" />
+                    <ScalarProperty Name="Country" ColumnName="Country" />
+                    <ScalarProperty Name="DougCount" ColumnName="DougCount" />
+                    <ScalarProperty Name="RaceRaceId" ColumnName="RaceRaceId" />
+                </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(SKIModel.Mushing)">
+                <MappingFragment StoreEntitySet="Teams_Mushing">
+                    <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                    <ScalarProperty Name="Leader1" ColumnName="Leader1" />
+                    <ScalarProperty Name="Leader2" ColumnName="Leader2" />
+                </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(SKIModel.Skijoring)">
+                <MappingFragment StoreEntitySet="Teams_Skijoring">
+                    <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                    <ScalarProperty Name="Dog1" ColumnName="Dog1" />
+                    <ScalarProperty Name="Dog2" ColumnName="Dog2" />
+                    <ScalarProperty Name="Dog3" ColumnName="Dog3" />
+                    <ScalarProperty Name="NumberOfLeaders" ColumnName="NumberOfLeaders" />
+                </MappingFragment>
+            </EntityTypeMapping>
+        </EntitySetMapping>
+    </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="DefaultDatabaseSchema" Value="SKI" />
+        <DesignerProperty Name="DDLGenerationTemplate" Value="$(VSEFTools)\DBGen\SSDLToOracle.tt" />
+        <DesignerProperty Name="DatabaseGenerationWorkflow" Value="$(VSEFTools)\DBGen\Generate Oracle Via T4 (TPT).xaml" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
