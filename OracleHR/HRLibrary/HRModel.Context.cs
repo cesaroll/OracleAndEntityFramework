@@ -34,6 +34,7 @@ namespace HRLibrary
         public virtual DbSet<JOB> JOBS { get; set; }
         public virtual DbSet<LOCATION> LOCATIONS { get; set; }
         public virtual DbSet<REGION> REGIONS { get; set; }
+        public virtual DbSet<EMP_DETAILS_VIEW> EMP_DETAILS_VIEW { get; set; }
     
         public virtual int ADD_JOB_HISTORY(Nullable<decimal> p_EMP_ID, Nullable<System.DateTime> p_START_DATE, Nullable<System.DateTime> p_END_DATE, string p_JOB_ID, Nullable<decimal> p_DEPARTMENT_ID)
         {

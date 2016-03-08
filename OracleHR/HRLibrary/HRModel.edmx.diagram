@@ -22,6 +22,7 @@
         <AssociationConnector Association="HRModel.EMP_MANAGER_FK" ManuallyRouted="false" />
         <AssociationConnector Association="HRModel.JHIST_EMP_FK" ManuallyRouted="false" />
         <AssociationConnector Association="HRModel.JHIST_JOB_FK" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="HRModel.EMP_DETAILS_VIEW" Width="1.5" PointX="8.375" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

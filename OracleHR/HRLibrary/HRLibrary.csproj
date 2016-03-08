@@ -67,6 +67,9 @@
     <Compile Include="EMPLOYEE.cs">
       <DependentUpon>HRModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EMP_DETAILS_VIEW.cs">
+      <DependentUpon>HRModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="HRModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
