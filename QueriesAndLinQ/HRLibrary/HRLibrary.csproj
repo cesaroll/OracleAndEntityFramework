@@ -107,6 +107,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>HRModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="ClassDiagram1.cd" />
     <None Include="HRModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>HRModel.edmx</DependentUpon>
