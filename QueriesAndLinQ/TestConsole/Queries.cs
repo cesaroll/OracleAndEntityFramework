@@ -276,5 +276,76 @@ namespace TestConsole
         }
 
         #endregion
+
+        #region Aggregates
+
+        /// <summary>
+        /// Get Number of employees by department
+        /// </summary>
+        public void AggregateQuery()
+        {
+            var dc = new HREntities();
+
+            var depCount = dc.DEPARTMENTS
+                .Where(d => d.EMPLOYEES.Any())
+                .OrderBy(d => d.DEPARTMENT_NAME)
+                .Select(d => new
+                {
+                    d.DEPARTMENT_NAME,
+                    EmployeeCount = d.EMPLOYEES.Count
+                });
+
+            Console.WriteLine("Department Name     Employee Count");
+            Console.WriteLine("==================================");
+
+            foreach (var dep in depCount)
+            {
+                Console.WriteLine("{0,16}     {1}", dep.DEPARTMENT_NAME, dep.EmployeeCount);
+            }
+
+            Console.WriteLine();
+        }
+
+        /// <summary>
+        /// Get most well paid employee by department
+        /// </summary>
+        public void AggregateQuery2()
+        {
+            var dc = new HREntities();
+
+            var bestPaid = dc.DEPARTMENTS
+                .Where(d => d.EMPLOYEES.Any())
+                .Select(d => new
+                {
+                    DepartmentName = d.DEPARTMENT_NAME,
+                    Employee = d.EMPLOYEES
+                        .OrderByDescending(e => e.SALARY)
+                        .Select(e => new
+                        {
+                            Name = e.LAST_NAME + ", " + e.FIRST_NAME,
+                            Salary = e.SALARY
+                        })
+                        .FirstOrDefault()
+                        
+                })
+                .OrderByDescending(d => d.Employee.Salary);
+
+            //Console.WriteLine(bestPaid.ToString());
+            Console.WriteLine("Best paid employees by department:");
+            Console.WriteLine("Department             Employee            Salary");
+            Console.WriteLine("====================================================");
+
+            foreach (var dep in bestPaid)
+            {
+                Console.WriteLine("{0,16}    {1, 18}    {2:C}", 
+                    dep.DepartmentName,
+                    dep.Employee.Name,
+                    dep.Employee.Salary);
+            }
+            Console.WriteLine();
+        }
+
+        #endregion
+
     }
 }

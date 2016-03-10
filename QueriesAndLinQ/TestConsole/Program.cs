@@ -18,6 +18,7 @@ namespace TestConsole
                 Console.WriteLine("E: Navigaton Collection");
                 Console.WriteLine("F: Navigaton Collection 2");
                 Console.WriteLine("G: Navigaton Collection Any");
+                Console.WriteLine("H: Aggregates");
 
                 Console.WriteLine("\nSelect an option ('.' to exit...)");
 
@@ -51,6 +52,10 @@ namespace TestConsole
                         break;
                     case 'G':
                         q.NavigationCollectionAny();
+                        break;
+                    case 'H':
+                        q.AggregateQuery();
+                        q.AggregateQuery2();
                         break;
                 }
 
