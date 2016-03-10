@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="331f5e2f841a48ebbf2912b56f020d85" Name="Diagram1">
         <EntityTypeShape EntityType="HRModel.COUNTRy" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRModel.DEPARTMENT" Width="1.5" PointX="5.25" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRModel.DEPARTMENT" Width="1.75" PointX="5.25" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="HRModel.EMPLOYEE" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="HRModel.JOB_HISTORY" Width="1.5" PointX="7.5" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="HRModel.JOB" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
@@ -23,7 +23,15 @@
         <AssociationConnector Association="HRModel.EMP_JOB_FK" ManuallyRouted="false" />
         <AssociationConnector Association="HRModel.EMP_MANAGER_FK" ManuallyRouted="false" />
         <AssociationConnector Association="HRModel.JHIST_EMP_FK" ManuallyRouted="false" />
-        <AssociationConnector Association="HRModel.JHIST_JOB_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="HRModel.JHIST_JOB_FK" ManuallyRouted="true" >
+          <ConnectorPoint PointX="1.5" PointY="4.297587890625" />
+          <ConnectorPoint PointX="1.5" PointY="5.675" />
+          <ConnectorPoint PointX="5.385416666666667" PointY="5.6749999999999989" />
+          <ConnectorPoint PointX="5.552083333333333" PointY="5.675" />
+          <ConnectorPoint PointX="7.125" PointY="5.675" />
+          <ConnectorPoint PointX="7.125" PointY="3.6408836442057293" />
+          <ConnectorPoint PointX="7.5" PointY="3.6408836442057293" />
+        </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

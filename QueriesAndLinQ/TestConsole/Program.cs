@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TestConsole
 {
@@ -17,6 +13,8 @@ namespace TestConsole
                 Console.Clear();
                 Console.WriteLine("A: Very Simple Query");
                 Console.WriteLine("B: Projection Query");
+                Console.WriteLine("C: Navigaton References Query");
+                Console.WriteLine("D: Navigaton References Query 3");
 
                 Console.WriteLine("\nSelect an option ('.' to exit...)");
 
@@ -35,6 +33,14 @@ namespace TestConsole
                     case 'B':
                         q.ProjectionQuery();
                         break;
+                    case 'C':
+                        q.NavigationReferencesQuery();
+                        q.NavigationReferenceQuery2();
+                        break;
+                    case 'D':
+                        q.NavigationReferencesQuery3();
+                        break;
+
                 }
 
                 if (Console.ReadKey(true).KeyChar == '.')

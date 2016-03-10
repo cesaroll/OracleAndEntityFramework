@@ -365,8 +365,8 @@ FROM "HR"."EMP_DETAILS_VIEW" "EMP_DETAILS_VIEW"</DefiningQuery>
           <NavigationProperty Name="DEPARTMENTS" Relationship="Self.DEPT_MGR_FK" FromRole="EMPLOYEES" ToRole="DEPARTMENTS" />
           <NavigationProperty Name="DEPARTMENT" Relationship="Self.EMP_DEPT_FK" FromRole="EMPLOYEES" ToRole="DEPARTMENTS" />
           <NavigationProperty Name="JOB" Relationship="Self.EMP_JOB_FK" FromRole="EMPLOYEES" ToRole="JOBS" />
-          <NavigationProperty Name="EMPLOYEES1" Relationship="Self.EMP_MANAGER_FK" FromRole="EMPLOYEES" ToRole="EMPLOYEES1" />
-          <NavigationProperty Name="EMPLOYEE1" Relationship="Self.EMP_MANAGER_FK" FromRole="EMPLOYEES1" ToRole="EMPLOYEES" />
+          <NavigationProperty Name="SUBORDINATES" Relationship="Self.EMP_MANAGER_FK" FromRole="EMPLOYEES" ToRole="EMPLOYEES1" />
+          <NavigationProperty Name="MANAGER" Relationship="Self.EMP_MANAGER_FK" FromRole="EMPLOYEES1" ToRole="EMPLOYEES" />
           <NavigationProperty Name="JOB_HISTORY" Relationship="Self.JHIST_EMP_FK" FromRole="EMPLOYEES" ToRole="JOB_HISTORY" />
         </EntityType>
         <EntityType Name="JOB_HISTORY">

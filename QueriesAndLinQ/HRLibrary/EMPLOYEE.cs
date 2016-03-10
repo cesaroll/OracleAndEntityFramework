@@ -18,7 +18,7 @@ namespace HRLibrary
         public EMPLOYEE()
         {
             this.DEPARTMENTS = new HashSet<DEPARTMENT>();
-            this.EMPLOYEES1 = new HashSet<EMPLOYEE>();
+            this.SUBORDINATES = new HashSet<EMPLOYEE>();
             this.JOB_HISTORY = new HashSet<JOB_HISTORY>();
         }
     
@@ -39,8 +39,8 @@ namespace HRLibrary
         public virtual DEPARTMENT DEPARTMENT { get; set; }
         public virtual JOB JOB { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EMPLOYEE> EMPLOYEES1 { get; set; }
-        public virtual EMPLOYEE EMPLOYEE1 { get; set; }
+        public virtual ICollection<EMPLOYEE> SUBORDINATES { get; set; }
+        public virtual EMPLOYEE MANAGER { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<JOB_HISTORY> JOB_HISTORY { get; set; }
     }
