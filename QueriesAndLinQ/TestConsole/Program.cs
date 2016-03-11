@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.Design;
+using HRLibrary;
 
 namespace TestConsole
 {
@@ -6,8 +8,19 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            var q = new Queries();
+            using (var hrContext = new HREntities())
+            {
+                var q = new Queries(hrContext); //inject Context
 
+                Menu(q);
+
+            }
+
+        }
+
+
+        private static void Menu(Queries q)
+        {
             while (true)
             {
                 Console.Clear();
@@ -23,7 +36,7 @@ namespace TestConsole
                 Console.WriteLine("\nSelect an option ('.' to exit...)");
 
                 var key = Char.ToUpper(Console.ReadKey().KeyChar);
-                
+
                 if (key == '.')
                     return;
 
@@ -62,7 +75,7 @@ namespace TestConsole
                 if (Console.ReadKey(true).KeyChar == '.')
                     return;
             }
-
         }
+
     }
 }

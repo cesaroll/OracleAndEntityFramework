@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Linq;
 using HRLibrary;
 
@@ -6,12 +7,26 @@ namespace TestConsole
 {
     public class Queries
     {
+        #region Constructors
+
+        public Queries(HREntities context)
+        {
+            dc = context;
+        }
+
+        #endregion
+        
+        #region Properties
+
+        private HREntities dc { get; set; }
+
+        #endregion
+
+
         #region Very Simple Query
 
         public void VerySimpleQuery()
         {
-            var dc = new HREntities();
-
             var employees = from emp in dc.EMPLOYEES
                 where emp.DEPARTMENT_ID == 90
                 select emp;
@@ -29,8 +44,6 @@ namespace TestConsole
 
         public void ProjectionQuery()
         {
-            var dc = new HREntities();
-
             var employees = dc.EMPLOYEES
                 .Where(e => e.DEPARTMENT_ID == 100)
                 .OrderBy(e => e.LAST_NAME)
@@ -50,8 +63,6 @@ namespace TestConsole
 
         public void NavigationReferencesQuery()
         {
-            var dc = new HREntities();
-
             /*
             var employeeManagers = dc.EMPLOYEES
                 .Where(e => e.DEPARTMENT_ID == 100)
@@ -151,8 +162,6 @@ namespace TestConsole
 
         public void NavigationCollection()
         {
-            var dc = new HREntities();
-
             var empJobHist = dc.EMPLOYEES.Where(e => e.JOB_HISTORY.Count > 0)
                 .Select(e => new
                 {
@@ -234,8 +243,6 @@ namespace TestConsole
         /// </summary>
         public void NavigationCollectionAny()
         {
-            var dc = new HREntities();
-
             var ldate = DateTime.Parse("2005-01-01").Date;
 
             var empJobHist = dc.EMPLOYEES
@@ -284,8 +291,6 @@ namespace TestConsole
         /// </summary>
         public void AggregateQuery()
         {
-            var dc = new HREntities();
-
             var depCount = dc.DEPARTMENTS
                 .Where(d => d.EMPLOYEES.Any())
                 .OrderBy(d => d.DEPARTMENT_NAME)
