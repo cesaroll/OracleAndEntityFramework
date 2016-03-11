@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Data;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using HRLibrary;
 
@@ -406,5 +408,33 @@ namespace TestConsole
         }
 
         #endregion
+
+        #region Basic Entity SQL
+
+        /// <summary>
+        /// Basic Entity SQL using Object Query Syntax
+        /// Display Object Query command text
+        /// Display final SQL using "ToTraceString()"
+        /// </summary>
+        public void BasicEntitySQL()
+        {
+            string query = "SELECT VALUE d FROM HREntities.DEPARTMENTS AS d WHERE d.Department_id >= 100";
+
+            ObjectQuery<DEPARTMENT> departments = ((IObjectContextAdapter) dc).ObjectContext.CreateQuery<DEPARTMENT>(query);
+
+            Console.WriteLine(departments.CommandText);
+            Console.WriteLine();
+            Console.WriteLine(departments.ToTraceString());
+            Console.WriteLine();
+
+            foreach (var dep in departments)
+            {
+                Console.WriteLine(dep.DEPARTMENT_NAME);
+            }
+
+        }
+
+        #endregion
+
     }
 }
