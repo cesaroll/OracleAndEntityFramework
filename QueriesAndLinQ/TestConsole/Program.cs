@@ -33,7 +33,7 @@ namespace TestConsole
                 Console.WriteLine("G: Navigaton Collection Any");
                 Console.WriteLine("H: Aggregates");
                 Console.WriteLine("I: Grouping with Projection");
-                Console.WriteLine("J: Basic Entity SQL");
+                Console.WriteLine("J: Entity SQL");
                 
 
                 Console.WriteLine("\nSelect an option ('.' to exit...)");
@@ -78,6 +78,7 @@ namespace TestConsole
                         break;
                     case 'J':
                         q.BasicEntitySQL();
+                        q.ParameterizedEntitySQL();
                         break;
                 }
 

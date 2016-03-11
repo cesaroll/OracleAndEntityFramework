@@ -409,7 +409,7 @@ namespace TestConsole
 
         #endregion
 
-        #region Basic Entity SQL
+        #region Entity SQL
 
         /// <summary>
         /// Basic Entity SQL using Object Query Syntax
@@ -418,6 +418,8 @@ namespace TestConsole
         /// </summary>
         public void BasicEntitySQL()
         {
+            Console.WriteLine("Basic Entity SQL\n");
+
             string query = "SELECT VALUE d FROM HREntities.DEPARTMENTS AS d WHERE d.Department_id >= 100";
 
             ObjectQuery<DEPARTMENT> departments = ((IObjectContextAdapter) dc).ObjectContext.CreateQuery<DEPARTMENT>(query);
@@ -432,6 +434,29 @@ namespace TestConsole
                 Console.WriteLine(dep.DEPARTMENT_NAME);
             }
 
+            Console.WriteLine("\n");
+        }
+
+        public void ParameterizedEntitySQL()
+        {
+            Console.WriteLine("Parameterized Entity SQL\n");
+            string query = "SELECT VALUE d FROM HREntities.DEPARTMENTS AS d WHERE d.Department_id >= @DepartmentID";
+
+            ObjectQuery<DEPARTMENT> departments = ((IObjectContextAdapter)dc).ObjectContext.CreateQuery<DEPARTMENT>(query);
+
+            departments.Parameters.Add(new ObjectParameter("DepartmentID", 100));
+
+            Console.WriteLine(departments.CommandText);
+            Console.WriteLine();
+            Console.WriteLine(departments.ToTraceString());
+            Console.WriteLine();
+
+            foreach (var dep in departments)
+            {
+                Console.WriteLine(dep.DEPARTMENT_NAME);
+            }
+
+            Console.WriteLine("\n");
         }
 
         #endregion
