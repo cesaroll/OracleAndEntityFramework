@@ -10,7 +10,7 @@ namespace TestConsole
         {
             using (var hrContext = new HREntities())
             {
-                var q = new Queries(hrContext); //inject Context
+                var q = new Queries(hrContext); //injecting Context
 
                 Menu(q);
 
@@ -32,6 +32,7 @@ namespace TestConsole
                 Console.WriteLine("F: Navigaton Collection 2");
                 Console.WriteLine("G: Navigaton Collection Any");
                 Console.WriteLine("H: Aggregates");
+                Console.WriteLine("I: Grouping with Projection");
 
                 Console.WriteLine("\nSelect an option ('.' to exit...)");
 
@@ -69,6 +70,9 @@ namespace TestConsole
                     case 'H':
                         q.AggregateQuery();
                         q.AggregateQuery2();
+                        break;
+                    case 'I':
+                        q.GroupinWithProjectionQuery();
                         break;
                 }
 

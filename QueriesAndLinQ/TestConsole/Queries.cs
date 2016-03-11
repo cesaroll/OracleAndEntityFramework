@@ -319,7 +319,7 @@ namespace TestConsole
             var dc = new HREntities();
 
             var bestPaid = dc.DEPARTMENTS
-                .Where(d => d.EMPLOYEES.Any())
+                .Where(d => d.EMPLOYEES.Any() && !d.EMPLOYEE.Equals(null))
                 .Select(d => new
                 {
                     DepartmentName = d.DEPARTMENT_NAME,
@@ -352,5 +352,59 @@ namespace TestConsole
 
         #endregion
 
+        #region Grouping with Projection
+
+        public void GroupinWithProjectionQuery()
+        {
+            try
+            {
+                var result = dc.EMPLOYEES
+                    .Where(e => dc.EMPLOYEES.Any(x => x.EMPLOYEE_ID == e.MANAGER_ID))
+                    .GroupBy(e => e.MANAGER_ID)
+                    .Select(g => new
+                    {
+                        ManagerId = g.Key,
+                        ManagerName = dc.EMPLOYEES.FirstOrDefault(x => x.EMPLOYEE_ID == g.Key).LAST_NAME,
+                        EmployeeCount = g.Count(),
+                        Employees = g.Select(x => new
+                        {
+                            Name = x.LAST_NAME + ", " + x.FIRST_NAME,
+                            Salary = x.SALARY,
+                            Email = x.EMAIL.ToLower()
+                        })
+                    });
+
+//                Console.WriteLine(result);
+//                Console.WriteLine();
+                
+                Console.WriteLine("Employees by Manager:\n");
+
+                foreach (var item in result)
+                {
+                    //var manager = dc.EMPLOYEES.FirstOrDefault(e => e.EMPLOYEE_ID == item.ManagerId);
+
+                    Console.WriteLine("Manager: {0}      Count: {1}", item.ManagerName, item.EmployeeCount);
+                    Console.WriteLine("====================================================================");
+                    
+                    foreach (var emp in item.Employees)
+                    {
+                        Console.WriteLine("   {0,-20} {1:C} {2,16}@ces.io",
+                            emp.Name, emp.Salary, emp.Email);
+                    }
+                    Console.WriteLine();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.InnerException.Message);
+            }
+
+            Console.WriteLine();
+
+        }
+
+        #endregion
     }
 }
